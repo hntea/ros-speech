@@ -1,8 +1,0 @@
-prefix=/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install
-
-Name: nlu
-Description: Description of nlu
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install/lib 
-Requires: 

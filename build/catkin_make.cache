@@ -1,2 +1,0 @@
-asr:nlu:player:pre_processer:tts
--DCMAKE_BUILD_TYPE=Debug -DCATKIN_DEVEL_PREFIX=/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/devel -DCMAKE_INSTALL_PREFIX=/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install -G Unix Makefiles

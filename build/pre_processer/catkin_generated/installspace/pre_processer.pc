@@ -1,8 +1,0 @@
-prefix=/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install
-
-Name: pre_processer
-Description: Description of pre_processer
-Version: 0.0.0
-Cflags: -I/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install/include
-Libs: -L/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install/lib 
-Requires: message_runtime
