@@ -1,0 +1,8 @@
+prefix=/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install
+
+Name: tts
+Description: Description of tts
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/install/lib 
+Requires: 
