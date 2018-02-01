@@ -43,6 +43,15 @@ class AsrBrige{
             m_backbuflen = blen;
         }
 
+
+        void setConfigInfo(size_t plen,size_t blen,string wkdir)
+        {
+            m_prebuflen = plen;
+            m_backbuflen = blen;
+            // if(wkdir == "default")
+            //     ;//todo
+        }
+
         /*
         函数功能：前项缓存
         */        
@@ -220,6 +229,35 @@ private:
         m_wkdir = path+"/";
 	}
 
+    //todo
+    // void mkdirs(){
+    //     int dirs = 0;
+    //     vector<int> index;
+    //     vector<string> subdir;
+    //     if(!m_wkdir.empty()){
+    //         idx = 0;
+    //         for(auto item:m_wkdir){
+    //             if(item == '/'){
+    //                 dirs++;
+    //                 index.push_back(idx);
+    //             }
+    //             idx++;
+    //         }
+    //     }
+
+    //     while(dirs >= 1){
+    //         string dir = m_wkdir.substr(0,index[]) 
+    //     }
+    // }
+
+    void mkcfgdir(){
+ 		int err;
+
+        //获取home 路径
+		struct passwd *pw = getpwuid(getuid());
+		const char *homedir = pw->pw_dir;
+		std::string path(homedir);       
+    }
 
     public:
         deque<vector<double> > m_prebuf;     //前向帧缓存
@@ -306,9 +344,17 @@ void callback(const pre_processer::OneChannelDataset &msgs){
 
 int main(int argc,char** argv)
 {
-    brige.setBuflen(20,5);   
+
     ros::init(argc, argv, "asr_brige");
     ros::NodeHandle nh;
+    
+    string wkdir;
+    int plen;
+    ros::param::param<string>("~wkdir", wkdir, "/ros-speech/audio/");
+    ros::param::param<int>("~prebuf_len", plen,20);
+    
+    brige.setConfigInfo(plen,plen+1,"default");  
+    
     ros::Subscriber sub = nh.subscribe("pre/dataset", 50, callback);
     pub1 = nh.advertise<std_msgs::String>("asrbrige/file", 50);
     pub2 = nh.advertise<pre_processer::Asrdata>("asrbrige/source",50);
