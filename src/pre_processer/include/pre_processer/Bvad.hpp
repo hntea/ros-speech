@@ -5,12 +5,12 @@ namespace Hntea
 {
     enum MFCC_STATE
     {
-        QUIET,
-        MAYBE_START,
-        START,
-        HOLD,
-        MAYBE_END,
-        END,        
+        QUIET,              //0
+        MAYBE_START,        //1  
+        START,              //2
+        HOLD,               //3
+        MAYBE_END,          //4
+        END,                //5
     };
 
     class Bvad

@@ -25,7 +25,6 @@ public:
 		
 	}
 
-
     //对象初始化
     void init()
     {
@@ -46,16 +45,21 @@ public:
         //申请缓存空间
         m_data.resize(m_size);
         //发布消息，缓存空间 50，true 表示其它节点个同步接受信息。
-        m_pub = m_nh.advertise<pre_processer::OneChannelDataset>("dataset", 50, true);
+        m_pub = m_nh.advertise<pre_processer::OneChannelDataset>("pre/dataset", 50, true);
 
         m_step = m_size/2;
         m_frame.resize(m_step);
+
+        //重新消息定义数组大小
+        msg.size = m_size;
+        msg.s_data.resize(m_step);
+        msg.p_data.resize(m_size);
 
         //初始化窗口
         mp_hanmingwin = new HanMingWin(m_size);
 
         //初始化vad算法对象
-        mp_vad = new MfccVad(30);
+        mp_vad = new MfccVad(30,30);
 
 
         //初始化特征相关参数
@@ -71,16 +75,10 @@ public:
     //执行预处理过程
     void run()
     {
-        //消息
-        pre_processer::OneChannelDataset msg;
-        //重新消息定义数组大小
-        msg.size = m_size;
-        msg.s_data.resize(m_size);
-
         uint64_t count = 0;
         while(ros::ok())
         {
-            msg.s_data = m_data;
+           
             //预加重
             m_emphasis.preEmphasis(m_data,m_data,0.98);
             m_features.setData(m_data);
@@ -97,8 +95,8 @@ public:
             //端点检测
             ((MfccVad*)mp_vad)->runvad();
 
-
             //构造消息并发布
+            msg.p_data = m_data;// 处理后的数据，源数据在帧移函数中加载
             msg.energy=energy;
             msg.zero=zero_crossing;
             msg.mfcc=mfcc;
@@ -126,16 +124,19 @@ public:
     //初始化填充窗口
     void fillFirstWindow()
     {
-        m_mic.read(&m_data[0],m_size);
-            
+        m_mic.read(&m_frame[0],m_step);
+        m_frames.push(m_frame);   
         //填充缓存
         for(int i=0;i<m_step;i++)
-            m_frame[i] = m_data[i];
-        m_frames.push(m_frame);
+             m_data[i] = m_frame[i];
+
+        m_mic.read(&m_frame[0],m_step);
+        m_frames.push(m_frame);  
+        for(int i=m_step;i<m_size;i++){
+            m_data[i] =  m_frame[i-m_step] ;
+            msg.s_data[i-m_step] = m_data[i];   //填充原始数据
+        }
         
-        for(int i=m_step;i<m_size;i++)
-            m_frame[i-m_step] = m_data[i];
-        m_frames.push(m_frame);
     }
 
     //帧移
@@ -152,6 +153,7 @@ public:
 
         for(int i=m_step;i<m_size;i++)
         {
+            msg.s_data[i-m_step] =m_frame[i-m_step];    //装载源数据
             m_data[i] = m_frame[i-m_step];
         }
 
@@ -173,6 +175,9 @@ private:
     FeatureSet m_features;
     HanMingWin* mp_hanmingwin;
     Bvad*   mp_vad;
+
+
+    pre_processer::OneChannelDataset msg;   //自定义消息
 };
 
 

@@ -1,5 +1,6 @@
 int32 size
 float64[] s_data
+float64[] p_data
 float64[] mfcc
 float64 zero
 float64 energy

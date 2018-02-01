@@ -14,16 +14,24 @@ namespace Hntea{
     {
         public:
             MfccVad(){};
-            MfccVad(double noises_count){
-                init(noises_count);
+            
+            /*
+            参数说明：
+            @noise_count:背景噪声帧数
+            @end_count:后端点延时计数
+                延时时间　＝　end_count*每一帧时长
+            */
+            MfccVad(size_t noises_count,size_t end_count){
+                init(noises_count,end_count);
             };
             
             /*
             函数功能：初始化
             参数说明：
                 noises:假设前noises帧为噪声
+                end_count:后端点延长计数　
             */
-            void init(double noises)
+            void init(size_t noises,size_t end_count)
             {
                 m_noise_frames = noises;
                 m_is_noise_update = false;
@@ -31,7 +39,7 @@ namespace Hntea{
                 m_background_noise.clear();
                 m_holdcount=0;
                 //用配置文件设置
-                m_holdtime_cfg=30;   
+                m_holdtime_cfg=end_count;   
                 m_low_cfg = 0.4;
                 m_up_cfg = 0.7;     
             }   
@@ -139,6 +147,10 @@ namespace Hntea{
                 {
                     if(m_l2 < m_low_threshold)
                         m_holdcount++;
+                    //计数结束前又出现端点信号
+                    if(m_l2 > m_up_threshold)
+                        m_holdcount = 0;
+
                     if(m_holdtime_cfg == m_holdcount)
                     {
                          m_state = END;
@@ -153,26 +165,11 @@ namespace Hntea{
 
             void runvad()
             {
-                switch(m_state){
-                case QUIET:
-                    isQuiet();
-                        break;
-                case MAYBE_START:
-                    isStart();
-                        break;
-                case START:
-                    isHold();
-                        break;
-                case HOLD:
-                    isHold();
-                        break;
-                case MAYBE_END:
-                    isEnd();
-                        break;
-                case END:
-                    isQuiet();
-                break;
-                }
+                bool ret;
+                ret = isQuiet();
+                ret = isStart();
+                ret = isHold();
+                ret = isEnd();
             }
 
         private:

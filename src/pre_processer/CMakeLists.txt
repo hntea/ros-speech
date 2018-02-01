@@ -50,6 +50,7 @@ find_package(catkin REQUIRED
 
 ## Generate messages in the 'msg' folder
 add_message_files(FILES
+  Asrdata.msg
   OneChannelDataset.msg
 )
 
@@ -152,10 +153,6 @@ include_directories(
 # )
 
 add_executable(pre_processer
-  #include/pre_processer/FeatureSet.hpp
-  #include/pre_processer/PreEmphasis.hpp
-  #../include/pre_processer/BDeviceParam.hpp
-  #../include/pre_processer/NormalMic.hpp  
 	node/preprocess_node.cpp
 )
 
@@ -166,6 +163,15 @@ add_executable(pre_processer
   libOoura_fft.a
 )
 
+add_executable(asr_brige
+	node/asr_brige_node.cpp
+)
+
+ target_link_libraries(asr_brige
+   ${catkin_LIBRARIES}
+   libAquila.a
+   libOoura_fft.a
+)
 
 #############
 ## Install ##
