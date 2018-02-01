@@ -1,0 +1,41 @@
+<launch>
+  <!-- arecord -l will show available input devices, use the car number as
+      the first number and the subdevice number as the second in a string
+      like plughw:1,0 -->
+  
+  <!--pre_process node-->
+  <arg name="block_size" default="512"/> 
+  <arg name="name" default="default"/>
+  <arg name="channels" default="1"/>
+  <arg name="depth" default="16"/>
+  <arg name="sample_rate" default="16000"/>
+  <arg name="background_noise_count" default="50"/>
+  <arg name="up_threshold" default="0.7"/>
+  <arg name="low_threshold" default="0.4"/>
+  <arg name="end_count" default="30"/>
+
+  <!--asr_brige node-->
+  <arg name="wkdir" default="/ros-speech/audio/"/> 
+  <arg name="prebuf_len" default="20"/>
+  
+
+  <node name="pre_processer" pkg="pre_processer" type="pre_processer" output="screen">
+        <param name="name" value="$(arg name)"/>
+        <param name="channels" value="$(arg channels)"/>
+        <param name="depth" value="$(arg depth)"/>
+        <param name="sample_rate" value="$(arg sample_rate)"/>
+        <param name="block_size" value="$(arg block_size)"/>
+        <param name="background_noise_count" value="$(arg background_noise_count)"/>
+        <param name="end_count" value="$(arg end_count)"/>
+        <param name="low_threshold" value="$(arg low_threshold)"/>
+        <param name="up_threshold" value="$(arg up_threshold)"/>
+  </node>
+
+
+  <node name="asr_brige" pkg="pre_processer" type="asr_brige" output="screen">
+        <param name="wkdir" value="$(arg wkdir)"/>
+        <param name="prebuf_len" value="$(arg prebuf_len)"/>
+  </node>
+
+
+</launch>
