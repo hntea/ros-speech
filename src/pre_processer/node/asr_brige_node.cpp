@@ -250,21 +250,21 @@ private:
     //     }
     // }
 
-    void mkcfgdir(){
- 		int err;
+    // void mkcfgdir(){
+ 	// 	int err;
 
-        //获取home 路径
-		struct passwd *pw = getpwuid(getuid());
-		const char *homedir = pw->pw_dir;
-		std::string path(homedir);       
-    }
+    //     //获取home 路径
+	// 	struct passwd *pw = getpwuid(getuid());
+	// 	const char *homedir = pw->pw_dir;
+	// 	std::string path(homedir);       
+    // }
 
     public:
         deque<vector<double> > m_prebuf;     //前向帧缓存
         deque<vector<double> > m_voicebuf;  //有效语音缓存
         deque<vector<double> > m_backbuf;    //后项帧缓存
         deque<vector<double> > m_asrbuf;     //识别音频块
-        vector<double> m_allbuf_64Bit;        //存放从起始到结束的音频数据（用于文件）
+        vector<double> m_allbuf_64Bit;       //存放从起始到结束的音频数据（用于文件）
         vector<short> m_allbuf_16Bit;       
     
     private:
@@ -321,7 +321,9 @@ void callback(const pre_processer::OneChannelDataset &msgs){
          //cout<<"加载后缓存"<<endl;
         //将未发布出去的数据发布
         while(!brige.m_asrbuf.empty()){
-         p2msg.source = brige.m_asrbuf.front();   
+         //cout<<"发布asr中还存在的数据..."<<endl;
+         p2msg.source = brige.m_asrbuf.front();
+         p2msg.vad_state = MAYBE_END;   
          pub2.publish(p2msg);
          brige.m_asrbuf.pop_front();
         }
