@@ -138,8 +138,15 @@ include_directories(
 add_executable(xfs_asrb 
     node/xfs_block_node.cpp
     include/asr/xunfei/lib/ASR.cpp
-	include/asr/xunfei/lib/ConfigResolver.cpp
-	include/asr/xunfei/lib/XFonlineasr.cpp
+    include/asr/xunfei/lib/ConfigResolver.cpp
+    include/asr/xunfei/lib/XFonlineasr.cpp
+)
+
+add_executable(xfs_asrf
+    node/xfs_file_node.cpp
+    include/asr/xunfei/lib/ASR.cpp
+    include/asr/xunfei/lib/ConfigResolver.cpp
+    include/asr/xunfei/lib/XFonlineasr.cpp
 )
 
 ## Rename C++ executable without prefix
@@ -157,7 +164,10 @@ target_link_libraries(xfs_asrb
   ${catkin_LIBRARIES}
   libmsc.so -ldl -pthread
 )
-
+target_link_libraries(xfs_asrf
+  ${catkin_LIBRARIES}
+  libmsc.so -ldl -pthread
+)
 #############
 ## Install ##
 #############
