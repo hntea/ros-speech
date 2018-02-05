@@ -21,7 +21,9 @@ grocery = Grocery('sample')
 new_grocery = Grocery('sample')
 new_grocery.load()
 # 预测
-print new_grocery.predict('放一首歌来听')
+ret = new_grocery.predict('放一首歌来听').predicted_y
+print "放一首歌吧"+str(new_grocery.predict('放一首歌来听').predicted_y)
+# print "放一首歌来听："＋new_grocery.predict('放一首歌来听').predicted_y
 print new_grocery.predict('你叫什么名字')
 print new_grocery.predict('吃饱没有')
 print new_grocery.predict('周杰伦')
