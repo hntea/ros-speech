@@ -1,10 +1,11 @@
+#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 import sys
 import rospy
 from tgrocery import Grocery
 from nlu.srv import *
 
-model = '/home/hntea/ros-speech/nlu-model/sample'
+model = '/home/hntea/ros-speech/nlu-model/model'
 new_grocery = Grocery(model)
 
 def handle_is_music(req):

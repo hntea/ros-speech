@@ -3,8 +3,8 @@ import os
 from tgrocery import Grocery
 
 dataset = '/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/training/dataset/dataset.dat'
- # 新开张一个杂货铺（别忘了取名）
-grocery = Grocery('sample')
+modelsave = 'model'
+#grocery = Grocery(modelsave)
 # 训练文本可以用列表传入
 # train_src = [
 #     ('education', '名师指导托福语法技巧：名词的复数形式'),
@@ -12,18 +12,17 @@ grocery = Grocery('sample')
 #     ('sports', '图文：法网孟菲尔斯苦战进16强 孟菲尔斯怒吼'),
 #     ('sports', '四川丹棱举行全国长距登山挑战赛 近万人参与')
 # ]
-# grocery.train(train_src)
+#grocery.train(train_src)
 #也可以用文件传入（默认以tab为分隔符，也支持自定义）
 #grocery.train(dataset)
 # 保存模型
 #grocery.save()
 # 加载模型（名字和保存的一样）
-new_grocery = Grocery('sample')
+new_grocery = Grocery(modelsave)
 new_grocery.load()
 # 预测
 ret = new_grocery.predict('放一首歌来听').predicted_y
 print "放一首歌吧"+str(new_grocery.predict('放一首歌来听').predicted_y)
-# print "放一首歌来听："＋new_grocery.predict('放一首歌来听').predicted_y
 print new_grocery.predict('你叫什么名字')
 print new_grocery.predict('吃饱没有')
 print new_grocery.predict('周杰伦')
@@ -34,6 +33,18 @@ print new_grocery.predict('播歌')
 print new_grocery.predict('我要听张含韵的歌')
 print new_grocery.predict('放一首：富士山下')
 print new_grocery.predict('点播：兄弟')
+print new_grocery.predict('听歌')
+print new_grocery.predict('听歌。')
+print new_grocery.predict('我要听歌')
+print new_grocery.predict('我要听音乐。')
+print new_grocery.predict('播放歌曲。')
+print new_grocery.predict('音乐播放。')
+print new_grocery.predict('Music.')
+print new_grocery.predict('音乐电台。')
+print new_grocery.predict('单曲循环当前歌曲')
+print new_grocery.predict('顺序播放歌曲。')
+
+
 # 测试
 # 测试
 # 测试
