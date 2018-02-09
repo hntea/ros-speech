@@ -77,6 +77,7 @@ int main(int argc, char **argv)
 	ros::param::param<std::string>("~configfile",configfile,defaultFile());
     parser.setCfgfile(configfile);
     parser.process();
+    
     XfOnlineASR params =  parser.getXfOnlineParams();
     XfBasic login  = parser.getXfBasic();
     xfasr.initcfg(params,login);

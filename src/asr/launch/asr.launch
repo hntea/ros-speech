@@ -9,9 +9,9 @@
         <param name="configfile" value="$(arg configfile)"/>
   </node>
 
-  <node name="xfs_asrf" pkg="asr" type="xfs_asrf" output="screen">
+  <!--<node name="xfs_asrf" pkg="asr" type="xfs_asrf" output="screen">
       <param name="configfile" value="$(arg configfile)"/>
-  </node>
+  </node>-->
 
 
 </launch>
