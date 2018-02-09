@@ -1,28 +1,35 @@
 #-*- coding:utf-8 -*-
 import os
 from tgrocery import Grocery
+import jieba
+import thulac
 
-dataset = '/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/training/dataset/dataset.dat'
-modelsave = 'model'
-#grocery = Grocery(modelsave)
-# 训练文本可以用列表传入
-# train_src = [
-#     ('education', '名师指导托福语法技巧：名词的复数形式'),
-#     ('education', '中国高考成绩海外认可 是“狼来了”吗？'),
-#     ('sports', '图文：法网孟菲尔斯苦战进16强 孟菲尔斯怒吼'),
-#     ('sports', '四川丹棱举行全国长距登山挑战赛 近万人参与')
+
+
+
+#添加用户词典
+# userdict=[
+#     ["/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/analise/musician.txt"],
+#     ['/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/analise/songs.txt']
 # ]
-#grocery.train(train_src)
-#也可以用文件传入（默认以tab为分隔符，也支持自定义）
-#grocery.train(dataset)
-# 保存模型
-#grocery.save()
+# for item in userdict:
+#     jieba.load_userdict(item)
+
+
+train_set = '/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/training/dataset/train.dat'
+text_set =  '/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/training/dataset/test.dat'
+
+modelsave = 'model'
+grocery = Grocery(modelsave)
+grocery.train(train_set)
+#保存模型
+grocery.save()
 # 加载模型（名字和保存的一样）
 new_grocery = Grocery(modelsave)
 new_grocery.load()
 # 预测
-ret = new_grocery.predict('放一首歌来听').predicted_y
-print "放一首歌吧"+str(new_grocery.predict('放一首歌来听').predicted_y)
+# ret = new_grocery.predict('放一首歌来听').predicted_y
+# print "放一首歌吧"+str(new_grocery.predict('放一首歌来听').predicted_y)
 print new_grocery.predict('你叫什么名字')
 print new_grocery.predict('吃饱没有')
 print new_grocery.predict('周杰伦')
@@ -56,6 +63,7 @@ print new_grocery.predict('顺序播放歌曲。')
 # 输出测试的准确率
 
 # 同样可支持文件传入
-#new_grocery.test('test_ch.txt')
+# result = new_grocery.test(text_set)
+# result.show_result()
 # 自定义分词模块（必须是一个函数）
 #custom_grocery = Grocery('custom', custom_tokenize=list)
