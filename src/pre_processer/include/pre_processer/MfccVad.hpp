@@ -101,7 +101,7 @@ namespace Hntea{
                     {
                        // m_plus = false; //关闭触发条件，使状态进入循环
                         m_state = MAYBE_START;
-                        cout<<"[isQuite]: MayBe Start!"<<endl;
+                        //cout<<"[isQuite]: MayBe Start!"<<endl;
                         return true;
                     }
                     else{
@@ -121,7 +121,7 @@ namespace Hntea{
                     }
                     else{
                         m_state = QUIET;
-                        cout<<"[isStart] Is Quiet!"<<endl;
+                        //cout<<"[isStart] Is Quiet!"<<endl;
                         return false;
                     }
                 }
@@ -135,7 +135,7 @@ namespace Hntea{
                     return true;
                 }
                 else if (m_state == HOLD && m_l2 < m_low_threshold){
-                    cout<<"[isHold] MAYBE_END"<<endl;
+                    //cout<<"[isHold] MAYBE_END"<<endl;
                     m_state = MAYBE_END;
                     return false;
                 }
