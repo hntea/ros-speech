@@ -9,7 +9,11 @@
         <param name="model" value="$(arg model)"/>
         -->
   </node>
+  
   <node name="is_music_client" pkg="nlu" type="is_music_client.py" output="screen">
+  </node>
+
+  <node name="partical_node" pkg="nlu" type="partical_node.py" output="screen">
   </node>
 
 </launch>

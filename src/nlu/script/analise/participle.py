@@ -4,10 +4,10 @@
 import jieba 
 import jieba.posseg as pseg
 
-seg_list = jieba.cut("给我来一首王力宏的落叶归根", cut_all=False)
-print("Full Mode: " + "/ ".join(seg_list))  # 全模式
-seg_list = jieba.cut("我想听周杰伦的听妈妈的话", cut_all=False)
-print("Full Mode: " + "/ ".join(seg_list))  # 全模式
+# seg_list = jieba.cut("给我来一首王力宏的落叶归根", cut_all=False)
+# print("Full Mode: " + "/ ".join(seg_list))  # 全模式
+# seg_list = jieba.cut("我想听周杰伦的听妈妈的话", cut_all=False)
+# print("Full Mode: " + "/ ".join(seg_list))  # 全模式
 
 # words = pseg.cut("我想听周杰伦的听妈妈的话")
 # for word, flag in words:
@@ -17,8 +17,17 @@ print("Full Mode: " + "/ ".join(seg_list))  # 全模式
 # for word, flag in words:
 #     print('%s %s' % (word, flag))
 
-jieba.load_userdict('songs.txt')
-jieba.load_userdict('musician.txt')
+userdict=[
+    "/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/analise/songs.txt",
+    "/home/hntea/RobotWorkSpace/SpeechSystem/speech_system/src/nlu/script/analise/musician.txt"
+]
+def upload_user_dict(input):
+    for item in input:
+        jieba.load_userdict(item)
+upload_user_dict(userdict)
+
+# jieba.load_userdict('songs.txt')
+# jieba.load_userdict('musician.txt')
 seg_list = jieba.cut("我想听周杰伦的听妈妈的话", cut_all=False)
 print("Full Mode: " + "/ ".join(seg_list))  # 全模式
 seg_list = jieba.cut("我想听周末我们去海边", cut_all=False)

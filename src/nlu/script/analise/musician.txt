@@ -1,5 +1,4 @@
 弦子 5 nr
-陈奕迅 5 nr
 艾怡良 5 nr
 东皇落笙 5 nr
 杨亚茹 5 nr
@@ -62,7 +61,6 @@
 林育群 5 nr
 李克勤 5 nr
 赵传 5 nr
-BigBang 5 nr
 逃跑计划 5 nr
 李宗盛 5 nr
 Twins 5 nr
@@ -75,7 +73,6 @@ Twins 5 nr
 叶倩文 5 nr
 张信哲 5 nr
 野娃娃乐队 5 nr
-张震岳，蔡健雅 5 nr
 许巍 5 nr
 刘昊霖 5 nr
 暗杠 5 nr
@@ -84,12 +81,10 @@ Twins 5 nr
 鱼果 5 nr
 陶晶莹 5 nr
 陈绮贞 5 nr
-Twins 5 nr
 孙燕姿 5 nr
 许飞 5 nr
 范玮琪 5 nr
 戴佩妮 5 nr
-Ahxello 5 nr
 信 5 nr
 萧亚轩 5 nr
 杨千嬅 5 nr
@@ -209,7 +204,7 @@ AGA 5 nr
 张惠妹 5 nr
 魏如萱 5 nr
 金海心 5 nr
-林俊杰，金莎 5 nr
+林俊杰 5 nr
 鹿晗 5 nr
 孙燕姿 5 nr
 苏打绿 5 nr

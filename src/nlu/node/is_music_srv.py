@@ -4,6 +4,11 @@ import sys
 import rospy
 from tgrocery import Grocery
 from nlu.srv import *
+import jieba 
+import jieba.posseg as pseg
+
+
+
 
 model = '/home/hntea/ros-speech/nlu-model/model'
 new_grocery = Grocery(model)
@@ -26,5 +31,4 @@ def is_music_server():
 if __name__ == "__main__":
     print "Servic Load Model..."
     new_grocery.load()              # 加载模型
-
     is_music_server()
