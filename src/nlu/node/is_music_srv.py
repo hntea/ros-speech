@@ -7,14 +7,11 @@ from nlu.srv import *
 import jieba 
 import jieba.posseg as pseg
 
-
-
-
 model = '/home/hntea/ros-speech/nlu-model/model'
 new_grocery = Grocery(model)
 
 def handle_is_music(req):
-    print "Request = [%s]"%(req.topic)
+    # print "Request = [%s]"%(req.topic)
     label =  str(new_grocery.predict(req.topic))
     if label=='music':
         ret = 1

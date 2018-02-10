@@ -35,7 +35,8 @@ def callback(data):
         pub.publish(msg)
     else:
         msg.isplay = 0
-        print ">>>>>>>>>>>>>>来聊天吧<<<<<<<<<<<<"
+        if(data.data != 'Null'):
+            print ">>>>>>机器人："
         pub.publish(msg)
 
 def is_music():
