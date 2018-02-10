@@ -3,7 +3,8 @@
 	<include file="$(find pre_processer)/launch/preprocess.launch" />
 	<include file="$(find asr)/launch/asr.launch" />
 	<include file="$(find nlu)/launch/nlu.launch" />
-    
+    <include file="$(find tts)/launch/tts.launch" />
+	<include file="$(find player)/launch/player.launch" />
 	<!--<include file="$(find audio_fectures)/launch/features.launch" />
   	<include file="$(find speech_vad)/launch/double_threshold.launch" />
   	<include file="$(find asr_brige)/launch/brige.launch" />
