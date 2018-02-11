@@ -102,11 +102,11 @@ namespace Hntea{
                        // m_plus = false; //关闭触发条件，使状态进入循环
                         m_state = MAYBE_START;
                         //cout<<"[isQuite]: MayBe Start!"<<endl;
-                        return true;
+                        return false;
                     }
                     else{
                         m_state = QUIET;
-                        return false;
+                        return true;
                     }
                 }
 
@@ -170,6 +170,30 @@ namespace Hntea{
                 ret = isStart();
                 ret = isHold();
                 ret = isEnd();
+                // switch (m_state)
+                // {
+                //     case QUIET:
+                //         ret = isQuiet();
+                //         break;
+                //     case MAYBE_START:
+                //          ret = isStart();
+                //         break;
+                //     case START:
+                //          ret = isHold();
+                //         break;
+                //     case HOLD:
+                //          ret = isHold();
+                //         break;
+                //     case MAYBE_END:
+                //          ret = isEnd();
+                //         break;
+                //     case END:
+                //          ret = isQuiet();
+                //          break;
+                //     // default:
+                //     //     break;
+                // }
+                
             }
 
         private:

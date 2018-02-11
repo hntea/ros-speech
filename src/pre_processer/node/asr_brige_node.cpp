@@ -318,10 +318,9 @@ void callback(const pre_processer::OneChannelDataset &msgs){
    if(dataset.vad_state == END)
    {
         brige.loadDataToBackbuf(dataset.s_data);
-         //cout<<"加载后缓存"<<endl;
         //将未发布出去的数据发布
         while(!brige.m_asrbuf.empty()){
-         //cout<<"发布asr中还存在的数据..."<<endl;
+        //  cout<<"发布asr中还存在的数据..."<<endl;
          p2msg.source = brige.m_asrbuf.front();
          p2msg.vad_state = MAYBE_END;   
          pub2.publish(p2msg);
@@ -329,7 +328,7 @@ void callback(const pre_processer::OneChannelDataset &msgs){
         }
          //cout<<"发布语音帧"<<endl;
         p2msg.source = brige.m_backbuf.front();
-        p2msg.vad_state = dataset.vad_state;
+        p2msg.vad_state = END;
         brige.m_backbuf.pop_front();
         pub2.publish(p2msg);
 
