@@ -28,11 +28,12 @@ ConfigResolver(){};
 	XfBasic getXfBasic();
 	XfOnlineASR getXfOnlineParams();
 	XfLocalASR getXfLocalParams();
-
+	XfWakeupParams getXfWakeupParams();
 private:
 	XfBasic _basic;
 	XfOnlineASR _online;
 	XfLocalASR _local;
+	XfWakeupParams _wakeup;
 	std::string _file;
 };
 

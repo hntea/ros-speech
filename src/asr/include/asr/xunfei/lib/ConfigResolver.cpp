@@ -27,6 +27,9 @@ XfOnlineASR ConfigResolver::getXfOnlineParams(){
 XfLocalASR ConfigResolver::getXfLocalParams(){
 	return this->_local;
 }
+XfWakeupParams ConfigResolver::getXfWakeupParams(){
+	return this->_wakeup;
+}
 
 void ConfigResolver::process(){
 	std::ifstream ifs(_file);
@@ -56,6 +59,7 @@ void ConfigResolver::process(){
 	_local.vad_enable       = jload["speechServer"]["xunfei"]["localasr"]["vad_enable"];
 	_local.vad_bos			= jload["speechServer"]["xunfei"]["localasr"]["vad_bos"];
 	_local.vad_eos			= jload["speechServer"]["xunfei"]["localasr"]["vad_eos"];
-
+	_wakeup.lgi_param		= jload["speechServer"]["xunfei"]["wakeup"]["lgi_param"];
+	_wakeup.ssb_param		= jload["speechServer"]["xunfei"]["wakeup"]["ssb_param"];
 }
 } /* namespace Hntea */

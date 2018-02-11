@@ -50,6 +50,12 @@ typedef struct userData {
 	int     	errcode; 				//记录语法构建或更新词典回调错误码
 	string    	local_grammar ;		 	//保存语法构建返回的语法ID
 }XfUserData;
+
+typedef struct wakeup{
+	string lgi_param;
+	string ssb_param;
+}XfWakeupParams;
+
 }
 #endif /* SRC_ASR_SERVER_INCLUDE_ASR_SERVER_XFPARAMS_H_ */
 

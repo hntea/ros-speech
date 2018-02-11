@@ -149,6 +149,11 @@ add_executable(xfs_asrf
     include/asr/xunfei/lib/XFonlineasr.cpp
 )
 
+add_executable(xfs_wakeup
+    node/xfs_wakeup_node.cpp
+    include/asr/xunfei/lib/ConfigResolver.cpp
+)
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -165,6 +170,10 @@ target_link_libraries(xfs_asrb
   libmsc.so -ldl -pthread
 )
 target_link_libraries(xfs_asrf
+  ${catkin_LIBRARIES}
+  libmsc.so -ldl -pthread
+)
+target_link_libraries(xfs_wakeup
   ${catkin_LIBRARIES}
   libmsc.so -ldl -pthread
 )
