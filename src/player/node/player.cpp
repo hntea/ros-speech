@@ -63,8 +63,8 @@ public:
 	    libvlc_event_manager_t *vlcEventManager = libvlc_media_player_event_manager(_mp);
 	    int ret = libvlc_event_attach(vlcEventManager,libvlc_MediaPlayerEndReached,libvlc_callback,NULL);
 
-	    while(!_end)
-	    	usleep(1000);
+	    while(!_end);
+	    	usleep(2000);
 
 	    stop();
 	}
