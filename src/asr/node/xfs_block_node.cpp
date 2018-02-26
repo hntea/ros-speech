@@ -8,17 +8,19 @@
 #include "../include/asr/xunfei/lib/XFonlineasr.h"
 #include "../include/asr/xunfei/lib/xfparams.h"
 #include "../include/asr/xunfei/lib/ConfigResolver.h"
-
+#include "../include/asr/xunfei/lib/XFwakeup.h"
 #include "pre_processer/Asrdata.h"
-
+#include "asr/IsWakeup.h"
 using namespace std;
 using namespace Hntea;
 
 
 
 ros::Publisher pub;
+ros::Publisher pub2;
 Hntea::ConfigResolver parser;
 Hntea::XFonlineasr xfasr;
+Hntea::XFWakeup xfwk;
 
 enum VADSTATE{
     QUITE=0,
@@ -29,10 +31,18 @@ enum VADSTATE{
     END
 };
 
-
+static bool is_wakeup = false;  
+void wakeupCallback(const asr::IsWakeup& msg)
+{
+    cout<<"设备唤醒.."<<endl;
+    if(msg.isWakeup)
+        is_wakeup = true;
+}
 
 void streamCallback(const pre_processer::Asrdata& msg)
 {
+    if(is_wakeup){
+
 	std::vector<int16_t> vec;
     string result;
     //转换成16位整形
@@ -41,17 +51,22 @@ void streamCallback(const pre_processer::Asrdata& msg)
         vec.push_back(sample);
     }
 
+    //识别过程
     if(msg.vad_state == VADSTATE::END){
-		
         //cout<<"结束"<<endl;
         xfasr.runasr(vec,result,true);
-		printf("[xfs_asrb] result = %s\n",result.c_str());
-		std_msgs::String res;
-		res.data = result;
-		pub.publish(res);
+        printf("[xfs_asrb] result = %s\n",result.c_str());
+        std_msgs::String res;
+        res.data = result;
+        pub.publish(res);
+        is_wakeup = false;  //识别结束后，再次设置成休眠模式
+        asr::IsWakeup msg2;
+        msg2.isWakeup = 0;
+        pub2.publish(msg2); //通知唤醒节点，再次启动唤醒功能
     }else{
         //cout<<"开始"<<endl;
         xfasr.runasr(vec,result,false);
+    }
     }
 }
 
@@ -81,10 +96,15 @@ int main(int argc, char **argv)
     XfOnlineASR params =  parser.getXfOnlineParams();
     XfBasic login  = parser.getXfBasic();
     xfasr.initcfg(params,login);
+    //无法在同一个进程中登录
+    // XfWakeupParams wakeup_params = parser.getXfWakeupParams();
+    // xfwk.init(wakeup_params);
 
 	ros::NodeHandle n;
 	ros::Subscriber sub = n.subscribe("/asrbrige/source", 50, streamCallback);
+ 	ros::Subscriber sub2 = n.subscribe( "asr/xf/wakeup", 50, wakeupCallback);  
 	pub = n.advertise<std_msgs::String>("asr/xf/b_res",50);
+    pub2 = n.advertise<asr::IsWakeup>("asr/isdone",50);
 	ros::spin();
 	return 0;
 }

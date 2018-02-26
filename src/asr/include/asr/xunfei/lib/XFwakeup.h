@@ -40,7 +40,8 @@ class XFWakeup
         }
         else if (MSP_IVW_MSG_WAKEUP == msg) //唤醒成功消息
         {
-            printf("唤醒成功：%s\n",info);
+            // printf("唤醒成功：%s\n",info);
+            wakeup = "wakeup";
         }
         return 0;
     }
@@ -76,7 +77,6 @@ class XFWakeup
         {
             printf(" [wakeup] QIVWSessionBegin failed! error code:%d\n",err_code);
         }
-        // cout<<"_sid = "<<_sid<<endl;
         //注册回调函数
         err_code = QIVWRegisterNotify(_sid.c_str(), cb_ivw_msg_proc,NULL);
         if (err_code != MSP_SUCCESS)
@@ -122,6 +122,17 @@ class XFWakeup
     {
         //todo
     }
+
+public:
+    static string wakeup;
+    void set_wakeup(const char* str){
+        if(!wakeup.empty())
+            wakeup.clear();
+        wakeup = str;
+    }
+    string get_wakeup(){
+        return wakeup;
+    }
 protected:
     void sleep_ms(int ms)
     {
@@ -132,6 +143,7 @@ private:
     string _sid;
 
 };
+string XFWakeup::wakeup = "sleep";
 }
 
 #endif

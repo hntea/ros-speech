@@ -9,9 +9,9 @@
 #include "../include/asr/xunfei/lib/xfparams.h"
 #include "../include/asr/xunfei/lib/ConfigResolver.h"
 #include "../include/asr/xunfei/lib/XFwakeup.h"
-
+#include "asr/IsWakeup.h"
 #include "pre_processer/Asrdata.h"
-
+// #include "asr/IsWakeup.h"
 using namespace std;
 using namespace Hntea;
 
@@ -31,35 +31,68 @@ enum VADSTATE{
 };
 
 
-static bool reset = true;
+
+
+void isdoneCallback(const asr::IsWakeup& msg){
+    if(msg.isWakeup==0){
+        xfwk.set_wakeup("sleep");
+        cout<<"一轮识别结束，设置设备休眠"<<endl;
+    }
+      
+}
+
 void Callback(const pre_processer::Asrdata& msg)
 {
-	std::vector<int16_t> vec;
+    static bool reset = true;
+    string wakeup = xfwk.get_wakeup();
+
+    std::vector<int16_t> vec;
     string result;
     //转换成16位整形
     for(auto item:msg.source){
         short sample = item;
         vec.push_back(sample);
     }
-    
-    if(reset){
-        cout<<"准备唤醒"<<endl;
-        xfwk.prepare();
-        xfwk.begin_rec_16B(vec);
-        reset = false;
+
+    if(wakeup == "wakeup" && reset ==false)     //注意得到唤醒结果时当前帧可能不是处于最终状态
+    {     
+        if((msg.vad_state == VADSTATE::HOLD || msg.vad_state == VADSTATE::MAYBEEND))
+        {
+            xfwk.hold_rec_16B(vec);
+        }
+                
+        if(msg.vad_state == VADSTATE::END)
+        {
+            xfwk.end_rec_16B(vec);
+            cout<<"唤醒！"<<endl;
+            asr::IsWakeup msg;
+            msg.isWakeup = 1;
+            pub.publish(msg);
+            reset = true;
+        }
     }
-    
-    if((msg.vad_state == VADSTATE::HOLD || msg.vad_state == VADSTATE::MAYBEEND)&&!reset)
-    {
-        xfwk.hold_rec_16B(vec);
-        // cout<<"唤醒中........."<<endl;
-    }
-    
-    if(msg.vad_state == VADSTATE::END)
-    {
-		 xfwk.end_rec_16B(vec);
-         cout<<"唤醒结束"<<endl;
-         reset = true;
+
+    if(wakeup != "wakeup")
+    {   
+        if(reset){
+            // cout<<"准备唤醒"<<endl;
+            xfwk.prepare();
+            xfwk.begin_rec_16B(vec);
+            reset = false;
+        }
+        
+        if((msg.vad_state == VADSTATE::HOLD || msg.vad_state == VADSTATE::MAYBEEND)&&!reset)
+        {
+            xfwk.hold_rec_16B(vec);
+            // cout<<"唤醒中........."<<endl;
+        }
+        
+        if(msg.vad_state == VADSTATE::END)
+        {
+            xfwk.end_rec_16B(vec);
+            cout<<"请先唤醒：小红小红"<<endl; //注意唤醒结束后并不会立马得到结果！
+            reset = true;
+        }
     }
 }
 
@@ -90,7 +123,8 @@ int main(int argc, char **argv)
     xfwk.init(params);
 	ros::NodeHandle n;
 	ros::Subscriber sub = n.subscribe("/asrbrige/source", 1000, Callback);
-	// pub = n.advertise<std_msgs::String>("asr/xf/b_res",50);
+    ros::Subscriber sub2 = n.subscribe("/asr/isdone", 1000, isdoneCallback);
+	pub = n.advertise<asr::IsWakeup>("asr/xf/wakeup",50);
 	ros::spin();
 	return 0;
 }
