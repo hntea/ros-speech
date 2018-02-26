@@ -116,7 +116,7 @@ namespace Hntea{
                 if(m_state == MAYBE_START){
                     if(m_l2 > m_up_threshold){
                         m_state = START;
-                        cout<<"[isStart] Start!"<<endl;
+                        //cout<<"[isStart] Start!"<<endl;
                         return true;
                     }
                     else{
@@ -131,7 +131,7 @@ namespace Hntea{
             virtual bool isHold(){
                 if(m_state == START && m_l2 > m_low_threshold){
                      m_state = HOLD;
-                     cout<<"[isHold] HOLD!"<<endl;
+                     //cout<<"[isHold] HOLD!"<<endl;
                     return true;
                 }
                 else if (m_state == HOLD && m_l2 < m_low_threshold){
@@ -155,7 +155,7 @@ namespace Hntea{
                     {
                          m_state = END;
                          m_holdcount = 0;
-                         cout<<"End"<<endl;
+                         //cout<<"End"<<endl;
                          return true;
                     }
                 }else{
