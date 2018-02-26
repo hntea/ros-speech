@@ -20,6 +20,14 @@ namespace Hntea
         virtual bool isEnd()=0;
         virtual bool isHold()=0;
         virtual bool isQuiet()=0;
+        void runvad()
+        {
+                bool ret;
+                ret = isQuiet();
+                ret = isStart();
+                ret = isHold();
+                ret = isEnd();
+        }
     };
 }
 

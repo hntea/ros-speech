@@ -163,38 +163,38 @@ namespace Hntea{
                 }
             }
 
-            void runvad()
-            {
-                bool ret;
-                ret = isQuiet();
-                ret = isStart();
-                ret = isHold();
-                ret = isEnd();
-                // switch (m_state)
-                // {
-                //     case QUIET:
-                //         ret = isQuiet();
-                //         break;
-                //     case MAYBE_START:
-                //          ret = isStart();
-                //         break;
-                //     case START:
-                //          ret = isHold();
-                //         break;
-                //     case HOLD:
-                //          ret = isHold();
-                //         break;
-                //     case MAYBE_END:
-                //          ret = isEnd();
-                //         break;
-                //     case END:
-                //          ret = isQuiet();
-                //          break;
-                //     // default:
-                //     //     break;
-                // }
+            // void runvad()
+            // {
+            //     bool ret;
+            //     ret = isQuiet();
+            //     ret = isStart();
+            //     ret = isHold();
+            //     ret = isEnd();
+            //     // switch (m_state)
+            //     // {
+            //     //     case QUIET:
+            //     //         ret = isQuiet();
+            //     //         break;
+            //     //     case MAYBE_START:
+            //     //          ret = isStart();
+            //     //         break;
+            //     //     case START:
+            //     //          ret = isHold();
+            //     //         break;
+            //     //     case HOLD:
+            //     //          ret = isHold();
+            //     //         break;
+            //     //     case MAYBE_END:
+            //     //          ret = isEnd();
+            //     //         break;
+            //     //     case END:
+            //     //          ret = isQuiet();
+            //     //          break;
+            //     //     // default:
+            //     //     //     break;
+            //     // }
                 
-            }
+            // }
 
         private:
 
