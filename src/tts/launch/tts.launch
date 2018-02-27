@@ -1,0 +1,6 @@
+<launch>
+
+  <node name="bd_tts" pkg="tts" type="bd_tts.py" output="screen">
+  </node>
+
+</launch>

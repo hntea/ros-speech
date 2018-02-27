@@ -1,0 +1,18 @@
+<launch>
+
+<!---->
+  <arg name="configfile" default="/home/hntea/ros-speech/config/config.json"/> 
+
+  <node name="xfs_asrb" pkg="asr" type="xfs_asrb" output="screen">
+        <param name="configfile" value="$(arg configfile)"/>
+  </node>
+
+  <!--<node name="xfs_asrf" pkg="asr" type="xfs_asrf" output="screen">
+      <param name="configfile" value="$(arg configfile)"/>
+  </node>-->
+
+
+  <node name="xfs_wakeup" pkg="asr" type="xfs_wakeup" output="screen">
+        <param name="configfile" value="$(arg configfile)"/>
+  </node>
+</launch>

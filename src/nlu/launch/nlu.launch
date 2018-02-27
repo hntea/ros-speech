@@ -1,0 +1,19 @@
+<launch>
+
+<!---->
+  <arg name="model" default="/home/hntea/ros-speech/model/sample"/> 
+
+<!---->
+  <node name="is_music_srv" pkg="nlu" type="is_music_srv.py" output="screen">
+        <!--
+        <param name="model" value="$(arg model)"/>
+        -->
+  </node>
+  
+  <node name="is_music_client" pkg="nlu" type="is_music_client.py" output="screen">
+  </node>
+
+  <node name="play_or_chat" pkg="nlu" type="play_or_chat.py" output="screen">
+  </node>
+
+</launch>
